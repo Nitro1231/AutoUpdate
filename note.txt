@@ -1,0 +1,26 @@
+target software version
+current software version
+
+latest updater version
+required updater version
+current updater version
+
+
+DOWNLOAD_FILE
+CHECKSUM
+UNZIP_FILE
+
+CREATE_DIR
+COPY_DIR
+MOVE_DIR
+REMOVE_DIR
+
+WRITE_FILE
+COPY_FILE
+MOVE_FILE
+REMOVE_FILE
+
+UPDATE_JSON
+CHECK_JSON
+EDIT_JSON_VALUE
+ADD_JSON_ITEM

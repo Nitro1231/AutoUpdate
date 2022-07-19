@@ -1,0 +1,9 @@
+{
+    "software_version": "",
+    "updater_version": "",
+    "events" : [
+        {
+            "type": "CREATE_DIR"
+        }
+    ]
+}
