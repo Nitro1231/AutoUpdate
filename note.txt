@@ -1,3 +1,5 @@
+certutil -hashfile ~path~ SHA256
+
 target software version
 current software version
 
