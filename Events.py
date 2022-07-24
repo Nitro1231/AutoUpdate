@@ -39,13 +39,16 @@ def unzip_file(zip_path: str, target_path: str) -> None:
 
 
 def create_dir(path: str) -> None:
-    os.makedirs(path)
+    try:
+        os.makedirs(path)
+    except FileExistsError:
+        pass
 
 def copy_dir(src_path: str, dest_path: str) -> None:
     shutil.copytree(src_path, dest_path)
 
 def delete_dir(path: str) -> None:
-    os.rmdir(path)
+    shutil.rmtree(path)
 
 
 def read_file(path: str) -> str:
