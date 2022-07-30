@@ -23,6 +23,8 @@ import unittest
 
 
 class EventsTest(unittest.TestCase):
+    # Test Group 1: download file and validation check.
+
     def test_group1_1_download_file(self):
         events.download_file('https://github.com/Nitro1231/AutoUpdate/blob/main/test_update.zip?raw=true', './temp/test_update.zip')
         self.assertTrue(os.path.exists('./temp/test_update.zip'))
@@ -42,14 +44,28 @@ class EventsTest(unittest.TestCase):
         sum_value = events.checksum('./temp/test_update/test.txt')
         self.assertEqual(compare, sum_value)
 
+    # Test Group 1 ends here.
+
     def test_checksum(self):
         compare = 'c412e9c22c4f9be167d04330437e2c5e6ba6dbc60fa5fab490790f4a4e7e2635'
         sum_value = events.checksum('./temp/test1/test.json')
         self.assertEqual(compare, sum_value)
 
+    def test_checksum_of_dir(self):
+        pass
+
+    def test_checksum_of_empty_file(self):
+        pass
+
+    def test_unzip_dir(self):
+        pass
+
+    def test_unzip_nonzip_file(self):
+        pass
+
     def test_create_redundant_dir(self):
         events.create_dir('./temp/new_dir1')
-        events.create_dir('./temp/new_dir1') # Should NOT raises the FileExistsError
+        events.create_dir('./temp/new_dir1') # Should NOT raise the FileExistsError.
         self.assertTrue(os.path.exists('./temp/new_dir1'))
 
     def test_create_tree_dir(self):
@@ -70,30 +86,54 @@ class EventsTest(unittest.TestCase):
         sum2 = events.checksum('./temp/test2/test1_copy/test.json')
         self.assertEqual(sum1, sum2)
 
-    def test_delete_dir(self):
-        events.delete_dir('./temp/test2/test1_copy')
-        self.assertTrue(os.path.exists('./temp/test1'))
-        self.assertFalse(os.path.exists('./temp/test2/test1_copy'))
-        self.assertFalse(os.path.exists('./temp/test2/test1_copy/sub_test_a'))
-        self.assertFalse(os.path.exists('./temp/test2/test1_copy/test.json'))
+    def test_copy_dir_to_nonexist_path(self):
+        pass
 
-        # What if the target is not a dir but file?
+    def test_copy_dir_to_file_path(self):
+        pass
+
+    def test_delete_dir(self):
+        events.create_dir('./temp/new_dir3/a/b/c')
+        events.delete_dir('./temp/new_dir3')
+        self.assertTrue(os.path.exists('./temp'))
+        self.assertFalse(os.path.exists('./temp/new_dir3/a'))
+        self.assertFalse(os.path.exists('./temp/new_dir3/a/b'))
+        self.assertFalse(os.path.exists('./temp/new_dir3/a/b/c'))
+
+    def test_delete_file_with_delete_dir_func(self):
+        # This SHOULD raise the NotADirectoryError.
         self.assertRaises(NotADirectoryError, events.delete_dir, './temp/test1/test.json')
+
+    def test_delete_nonexists_dir_with_delete_dir_func(self):
+        # This SHOULD raise the FileNotFoundError.
+        self.assertFalse(os.path.exists('./temp/non_exists_dir/'))
+        self.assertRaises(FileNotFoundError, events.delete_dir, './temp/non_exists_dir/')
 
     def test_read_file(self):
         content = events.read_file('./temp/test1/test.json')
         self.assertEqual(content, '{"a":"a", "b": false, "c": 10}')
 
-        # What if the file does not exisit?
-        self.assertRaises(FileNotFoundError, events.read_file, './nothing')
+    def test_read_dir_not_file(self):
+        # This SHOULD raise the FileNotFoundError.
+        self.assertTrue(os.path.exists('./temp/test1/'))
+        self.assertRaises(FileNotFoundError, events.read_file, './temp/test1/')
+
+    def test_read_non_exist_file(self):
+        # This SHOULD raise the FileNotFoundError.
+        self.assertFalse(os.path.exists('./nothing.file'))
+        self.assertRaises(FileNotFoundError, events.read_file, './nothing.file')
 
     def test_write_file(self):
-        rnd_num = random.random()
-        events.write_file('./temp/test1/test.txt', f'This is test {rnd_num}')
+        num = random.random()
+        events.write_file('./temp/test1/test.txt', f'This is test {num}')
 
         self.assertTrue(os.path.exists('./temp/test1/test.txt'))
         content = events.read_file('./temp/test1/test.txt')
-        self.assertEqual(content, f'This is test {rnd_num}')
+        self.assertEqual(content, f'This is test {num}')
+
+    def test_write_file_to_nonexist_dir(self):
+        # This SHOULD raise the FileNotFoundError.
+        self.assertRaises(FileNotFoundError, events.write_file, './temp/non_exists_dir/test.txt', f'This is test')
 
     def test_copy_file(self):
         events.copy_file('./temp/test1/test.json', './temp/test2/test_copy.json')
@@ -101,9 +141,17 @@ class EventsTest(unittest.TestCase):
         sum2 = events.checksum('./temp/test2/test_copy.json')
         self.assertEqual(sum1, sum2)
 
+    def test_copy_file_to_nonexist_dir(self):
+        # This SHOULD raise the FileNotFoundError.
+        self.assertRaises(FileNotFoundError, events.copy_file, './temp/test1/test.json', './temp/non_exists_dir/test_copy.json')
+
     def test_delete_file(self):
         events.delete_file('./temp/test2/test_copy.json')
         self.assertFalse(os.path.exists('./temp/test2/test_copy.json'))
+
+    def test_delete_dir_with_delete_file_func(self):
+        # This SHOULD raise the FileNotFoundError.
+        self.assertRaises(FileNotFoundError, events.delete_file, './temp/test2/')
 
 def prepare():
     try:

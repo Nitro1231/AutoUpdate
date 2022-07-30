@@ -52,6 +52,9 @@ def delete_dir(path: str) -> None:
 
 
 def read_file(path: str) -> str:
+    if not os.path.isfile(path):
+        raise FileNotFoundError
+
     with open(path, 'r', encoding='utf-8') as f:
         return f.read()
 
@@ -63,6 +66,9 @@ def copy_file(src_path: str, dest_path: str) -> None:
     shutil.copyfile(src_path, dest_path)
 
 def delete_file(path: str) -> None:
+    if not os.path.isfile(path):
+        raise FileNotFoundError
+
     os.remove(path)
 
 
