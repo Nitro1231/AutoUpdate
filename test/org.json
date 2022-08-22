@@ -1,0 +1,57 @@
+{
+    "str_name": {
+        "type": "str",
+        "default": "value1",
+        "regex": "",
+        "length": {
+            "min": 0,
+            "max": 10
+        }
+    },
+    "int_name": {
+        "type": "int",
+        "default": 10,
+        "range": {
+            "min": 0,
+            "max": 100
+        }
+    },
+    "float_name": {
+        "type": "float",
+        "default": 0.00001,
+        "range": {
+            "min": 0.0,
+            "max": 100.0
+        }
+    },
+    "bool_name": {
+        "type": "bool",
+        "default": false
+    },
+    "list_name": {
+        "type": "list",
+        "default": ["a", 10, false, {"key": "value"}],
+        "item_types": ["str", "int", "bool", "dict"]
+    },
+    "dict_name": {
+        "type": "dict",
+        "items": {
+            "int_name1": {
+                "type": "int",
+                "default": 10,
+                "range": {
+                    "min": 0,
+                    "max": 100
+                }
+            },
+            "int_name2": {
+                "type": "int",
+                "default": 50,
+                "range": {
+                    "min": 0,
+                    "max": 100
+                }
+            }
+        }
+    }
+}

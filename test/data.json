@@ -1,0 +1,19 @@
+{
+    "str": "str",
+    "int": 10,
+    "float": 0.0001,
+    "bool": false,
+    "list": [
+        "a",
+        10,
+        false
+    ],
+    "tuple": [
+        0,
+        10
+    ],
+    "dict": {
+        "ad": "awd"
+    },
+    "None": null
+}

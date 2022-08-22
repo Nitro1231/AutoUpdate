@@ -52,7 +52,7 @@ class EventsTest(unittest.TestCase):
         self.assertEqual(compare, sum_value)
 
     def test_checksum_of_dir(self):
-        pass
+        events.checksum('./temp')
 
     def test_checksum_of_empty_file(self):
         pass
@@ -160,6 +160,9 @@ def prepare():
         os.makedirs('./temp/test2/sub_test_b')
         with open('./temp/test1/test.json', 'w', encoding='utf-8') as f:
             f.write(content)
+        
+        with open('./temp/test1/test.json', 'w', encoding='utf-8') as f:
+            f.write('')
     except FileExistsError:
         pass
 
